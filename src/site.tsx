@@ -17,12 +17,7 @@ import {
   MoveRight,
   X,
 } from "lucide-react";
-import {
-  company,
-  industries,
-  legacyPages,
-  products,
-} from "./data";
+import { company, industries, legacyPages, products } from "./data";
 import legacyCatalog from "./legacyCatalog.json";
 
 const image = (file: string) => `/images/${file}`;
@@ -318,9 +313,6 @@ function Home() {
                 title="Built around your maintenance needs."
                 text="Explore product areas represented by OG Globe, selected for demanding working environments."
               />
-              <Link className="text-link section-all" to="/products">
-                View all product areas <MoveRight size={18} />
-              </Link>
             </div>
             <div className="product-grid">
               {products.map((p, i) => (
@@ -343,6 +335,9 @@ function Home() {
                   </div>
                 </Link>
               ))}
+            </div>
+            <div className="flex items-center justify-center mt-4 md:mt-8">
+              <ButtonLink to="/products">Explore our products</ButtonLink>
             </div>
           </div>
         </section>
@@ -368,7 +363,7 @@ function Home() {
               wrenches and special application tools for varied working
               environments.
             </p>
-            <ButtonLink to="/products/maintenance" >
+            <ButtonLink to="/products/maintenance">
               Explore maintenance tools
             </ButtonLink>
             <span className="feature-caption">MAINTENANCE PRODUCTS / 01</span>
@@ -872,12 +867,25 @@ function ProductsPage() {
           <div className="more-products">
             <span className="eyebrow">ORIGINAL CATALOGUE</span>
             <h3>Browse every listed product</h3>
-            <p>Product entries, available descriptions and imagery are carried over from the local OG Globe catalogue.</p>
+            <p>
+              Product entries, available descriptions and imagery are carried
+              over from the local OG Globe catalogue.
+            </p>
             <div className="legacy-product-grid">
               {legacyCatalog.map((item) => (
-                <Link className="legacy-product-card" to={`/products/${item.slug}`} key={item.slug}>
+                <Link
+                  className="legacy-product-card"
+                  to={`/products/${item.slug}`}
+                  key={item.slug}
+                >
                   <div className="legacy-product-thumb">
-                    {item.gallery[0] && <img loading="lazy" src={image(item.gallery[0].src)} alt={item.gallery[0].alt || item.name} />}
+                    {item.gallery[0] && (
+                      <img
+                        loading="lazy"
+                        src={image(item.gallery[0].src)}
+                        alt={item.gallery[0].alt || item.name}
+                      />
+                    )}
                     <ArrowUpRight size={16} />
                   </div>
                   <span>{item.group}</span>
@@ -904,10 +912,20 @@ function ProductDetail() {
     instrumentation: "instrumentation-products",
     "industrial-borescopes": "condition-monitoring-products",
   };
-  const source = legacyCatalog.find((item) => item.slug === (sourceSlug[slug] || slug));
-  const name = source?.name || product?.title || slug.replaceAll("-", " ").replace(/\b\w/g, (c) => c.toUpperCase());
-  const description = source?.description || product?.description || "Contact OG Globe for information about this product area.";
-  const gallery = source?.gallery || (product ? [{ src: `products/${product.image}`, alt: product.title }] : []);
+  const source = legacyCatalog.find(
+    (item) => item.slug === (sourceSlug[slug] || slug),
+  );
+  const name =
+    source?.name ||
+    product?.title ||
+    slug.replaceAll("-", " ").replace(/\b\w/g, (c) => c.toUpperCase());
+  const description =
+    source?.description ||
+    product?.description ||
+    "Contact OG Globe for information about this product area.";
+  const gallery =
+    source?.gallery ||
+    (product ? [{ src: `products/${product.image}`, alt: product.title }] : []);
   return (
     <>
       <SEO title={name} description={description} />
@@ -919,23 +937,62 @@ function ProductDetail() {
         />
         <section className="wrap section-pad detail-layout">
           <div className="detail-image">
-            {gallery[0] && <img src={image(gallery[0].src)} alt={gallery[0].alt || name} />}
+            {gallery[0] && (
+              <img src={image(gallery[0].src)} alt={gallery[0].alt || name} />
+            )}
           </div>
           <div>
-            <span className="eyebrow">{source?.group || "PRODUCT INFORMATION"}</span>
+            <span className="eyebrow">
+              {source?.group || "PRODUCT INFORMATION"}
+            </span>
             <h2>{name}</h2>
             <p>{description}</p>
             <ButtonLink to="/contact">Enquire about this product</ButtonLink>
           </div>
         </section>
-        {source?.details.length ? <section className="wrap source-details">
-          <SectionLabel kicker="FROM THE ORIGINAL CATALOGUE" title="Product information" />
-          <div className="source-detail-list">{source.details.map((detail, index) => <p key={`${index}-${detail.text}`} className={detail.kind === "prod-title" ? "source-detail-title" : ""}>{detail.text}</p>)}</div>
-        </section> : null}
-        {gallery.length > 1 ? <section className="wrap source-gallery">
-          <SectionLabel kicker="PRODUCT IMAGES" title="Catalogue gallery" text={`${gallery.length} images from the original OG Globe product page.`} />
-          <div className="source-gallery-grid">{gallery.map((item, index) => <figure key={`${item.src}-${index}`}><img loading="lazy" src={image(item.src)} alt={item.alt || `${name} product view ${index + 1}`} /><figcaption>{item.alt || `${name} · ${index + 1}`}</figcaption></figure>)}</div>
-        </section> : null}
+        {source?.details.length ? (
+          <section className="wrap source-details">
+            <SectionLabel
+              kicker="FROM THE ORIGINAL CATALOGUE"
+              title="Product information"
+            />
+            <div className="source-detail-list">
+              {source.details.map((detail, index) => (
+                <p
+                  key={`${index}-${detail.text}`}
+                  className={
+                    detail.kind === "prod-title" ? "source-detail-title" : ""
+                  }
+                >
+                  {detail.text}
+                </p>
+              ))}
+            </div>
+          </section>
+        ) : null}
+        {gallery.length > 1 ? (
+          <section className="wrap source-gallery">
+            <SectionLabel
+              kicker="PRODUCT IMAGES"
+              title="Catalogue gallery"
+              text={`${gallery.length} images from the original OG Globe product page.`}
+            />
+            <div className="source-gallery-grid">
+              {gallery.map((item, index) => (
+                <figure key={`${item.src}-${index}`}>
+                  <img
+                    loading="lazy"
+                    src={image(item.src)}
+                    alt={item.alt || `${name} product view ${index + 1}`}
+                  />
+                  <figcaption>
+                    {item.alt || `${name} · ${index + 1}`}
+                  </figcaption>
+                </figure>
+              ))}
+            </div>
+          </section>
+        ) : null}
         <section className="related-products wrap">
           <SectionLabel
             kicker="MORE FROM OG GLOBE"
