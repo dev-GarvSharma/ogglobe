@@ -377,9 +377,6 @@ function Home() {
                 title="Across the systems that power progress."
                 text="Products support customers across a broad range of industries and applications."
               />
-              <Link className="text-link section-all" to="/industries">
-                Explore industries <MoveRight size={18} />
-              </Link>
             </div>
             <div className="industry-layout">
               <div className="industry-photo">
@@ -398,11 +395,16 @@ function Home() {
                     <ArrowUpRight size={16} />
                   </Link>
                 ))}
-                <Link className="industry-more" to="/industries">
-                  + and many more industries
-                </Link>
               </div>
             </div>
+            <span className="flex items-center justify-center">
+              <Link
+                className="nav-cta mt-5"
+                to="/industries"
+              >
+                Explore industries <ArrowUpRight size={16} />
+              </Link>
+            </span>
           </div>
         </section>
         <section className="service-feature">
