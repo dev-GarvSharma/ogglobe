@@ -18,7 +18,7 @@ function ScrollToTop() {
   return null;
 }
 
-createRoot(document.getElementById("root")).render(
+createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
     <BrowserRouter>
       <ScrollToTop />
